@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\WaterReportController;
 
 /*
 |--------------------------------------------------------------------------
@@ -14,9 +15,7 @@ use App\Http\Controllers\RegisterController;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [RegisterController::class, 'index'])->name('index');
 Route::get('/dashboard', [RegisterController::class, 'dashboard'])->name('dashboard');
 Route::get('/login', [RegisterController::class, 'login'])->name('login');
 Route::get('/logout', [RegisterController::class, 'logout'])->name('logout');
@@ -26,4 +25,7 @@ Route::post('/register_user', [RegisterController::class, 'postRegisterUser'])->
 //API data route
 Route::get('/api_data', [RegisterController::class, 'getApiData'])->name('get_api');
 Route::get('/api_data/{id}', [RegisterController::class, 'getApiData'])->name('get_api_by_id');
+//Water Report Routes
+Route::get('/getWaterReport', [WaterReportController::class, 'getWaterReport'])->name('water.report');
+Route::post('/waterReport', [WaterReportController::class, 'postWaterReport'])->name('waterReport.submit');
 

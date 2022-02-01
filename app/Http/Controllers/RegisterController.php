@@ -10,6 +10,10 @@ use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
+    public function index(){
+        return view('final_report');        
+        return view('welcome');        
+    }
     public function postRegisterUser(Request $request){
         $inputs = $request->all();
         if(!empty($inputs)){
