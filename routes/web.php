@@ -28,4 +28,6 @@ Route::get('/api_data/{id}', [RegisterController::class, 'getApiData'])->name('g
 //Water Report Routes
 Route::get('/getWaterReport', [WaterReportController::class, 'getWaterReport'])->name('water.report');
 Route::post('/waterReport', [WaterReportController::class, 'postWaterReport'])->name('waterReport.submit');
+Route::post('/sendMail', [WaterReportController::class, 'mailReport'])->name('mail.report');
+Route::get('/mail-success', [WaterReportController::class, 'mailSuccess'])->name('mail-success');
 

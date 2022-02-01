@@ -1,6 +1,23 @@
-@extends('header')
-@section('title', 'Welcome to Water report generator')
-@section('content')    
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>OWO Water Report</title>
+  <meta charset="utf-8">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<body>
+
+<nav class="navbar bg-primary navbar-dark">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/" style="font-size: 24px; margin: 0 auto;">OWO Water Report</a>
+    </div>
+  </div>
+</nav>
     <style>
         .container{
             font-family: 'Montserrat', sans-serif;
@@ -86,20 +103,37 @@
         tds_chart.draw(data, options);
       }
     </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.min.js"></script>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.js"></script>
     <script type="text/javascript">
         function takeshot() { 
+            var success = 0;
             let grp = document.getElementById('graphs');
+            var email = "<?php echo $water_report->email; ?>";
+            var name = "<?php echo $water_report->name; ?>";
+            var phone = "<?php echo $water_report->phone; ?>";
             html2canvas(grp).then(function (canvas) {
-                document.getElementById('output').appendChild(canvas);
+                $('#graphs').remove();
+                document.getElementById('new_graph').appendChild(canvas);
+            var image = canvas.toDataURL('image/png');
+            $.post("{{ route('mail.report') }}", {_token: "{{ csrf_token() }}", image, email, phone, name},
+                function(data, status, jqXHR) {// success callback
+                    if(status == 'success'){
+                        alert('Mail has been sent.');
+                        window.location.href="{{ route('mail-success') }}";
+                    }else{
+                        alert('Error');
+                    }
+                }
+            );
             });
         }
     </script>
     </script>
-    <div class="content-wrapper bg-light">
+    <div class="content-wrapper bg-light" id="new_graph"></div>
+    <div class="content-wrapper bg-light" id="graphs">
         <section class="content mt-5">
         <div class="container" style="width:100%">
-            <h2 class="mb-3" style="text-align:center; text-decoration:underline;"><strong>OWO Water Report</strong></h2>
+            <h2 class="mb-3" style="text-align:center; text-decoration:underline;"><strong>OWO Water Assessment Report For Your Source Water</strong></h2>
             <div>
                 <span><strong>Name</strong> </span>: <span>&nbsp;{{ $water_report->name }}</span>
             </div>
@@ -114,9 +148,9 @@
             </div>
             <div>
                 @if($water_report->installed_ro == '' || $water_report->installed_ro == null)
-                    <span><strong>Installed Purifier/RO</strong> </span>: <span>&nbsp;None</span>
+                    <span><strong>Existing Purifier/RO</strong> </span>: <span>&nbsp;None</span>
                 @else
-                    <span><strong>Installed Purifier/RO</strong> </span>: <span>&nbsp;{{ $water_report->installed_ro }}</span>
+                    <span><strong>Existing Purifier/RO</strong> </span>: <span>&nbsp;{{ $water_report->installed_ro }}</span>
                 @endif
             </div>
             <table class="text-center" style="width: 100%; margin-top: 10px; font-size: 1em;" border="1px">
@@ -149,31 +183,29 @@
             </table>
             <br>
             <div class="form-group">
-                <div id='graphs'>
-                    <h2>
-                        <strong>PH Report :</strong>
-                    </h2>
-                    <div id="chart_div" style="width: 600px; height: 200px; margin: 0 auto !important;"></div> 
-                    <div style="width: 28%; margin: 0 auto !important;">
-                        <ul style="list-style-type:none;">
-                            <li><span style="background-color:red; border:1pt solid black; font-size:9px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> ACIDIC</li>
-                            <li><span style="background-color:green; border:1pt solid black; font-size:9px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> NEUTRAL</li>
-                            <li><span style="background-color:#F29C17; border:1pt solid black; font-size:9px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> ALKALINE</li>
-                        </ul> 
-                    </div>
-                    <br>
-                    <h2>
-                        <strong>TDS Report :</strong> 
-                    </h2>
-                    <div id="tds_chart_div" style="width: 600px; height: 200px; margin: 0 auto !important;"></div>                    
-                    <div style="width: 42%; margin: 0 auto !important;">
-                        <ul style="list-style-type:none; margin: 0 auto !important;">
-                            <li><span style="background-color:red; border:1pt solid black; font-size:9px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> DANGER</li>
-                            <li><span style="background-color:green; border:1pt solid black; font-size:9px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> EXCELLENT</li>
-                            <li><span style="background-color:#F29C17; border:1pt solid black; font-size:9px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> MODERATE</li>
-                            <li><span style="background-color:#FFF; border:1pt solid black; font-size:9px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> UNACCEPTABLE</li>
-                        </ul>
-                    </div>
+                <h2>
+                    <strong>PH Report :</strong>
+                </h2>
+                <div id="chart_div" style="width: 600px; height: 200px; margin: 0 auto !important;"></div> 
+                <div style="margin-left: 27% !important;">
+                    <ul style="list-style-type:none;">
+                        <li><span style="background-color:red; border:1pt solid black; font-size:9px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> ACIDIC</li>
+                        <li><span style="background-color:green; border:1pt solid black; font-size:9px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> NEUTRAL</li>
+                        <li><span style="background-color:#F29C17; border:1pt solid black; font-size:9px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> ALKALINE</li>
+                    </ul> 
+                </div>
+                <br>
+                <h2>
+                    <strong>TDS Report :</strong> 
+                </h2>
+                <div id="tds_chart_div" style="width: 600px; height: 200px; margin: 0 auto !important;"></div>                    
+                <div style=" margin: 0 auto !important;">
+                    <ul style="margin-left: 15% !important; list-style-type:none; ">
+                        <li><span style="background-color:red; border:1pt solid black; font-size:9px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> DANGER</li>
+                        <li><span style="background-color:green; border:1pt solid black; font-size:9px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> EXCELLENT</li>
+                        <li><span style="background-color:#F29C17; border:1pt solid black; font-size:9px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> MODERATE</li>
+                        <li><span style="background-color:#FFF; border:1pt solid black; font-size:9px;">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span> UNACCEPTABLE</li>
+                    </ul>
                 </div>
                 <br>
                 <h2>
@@ -191,17 +223,21 @@
                 <p>
                     If the <strong>TDS</strong> level of the water which is less than <strong>&lt;100</strong> is always considered as <strong>not a good water</strong> for human consumption. TDS levels in between <strong>100-400</strong> is considered as a <strong>perfect water</strong> to drink. and TDS which is more than <strong>>500</strong> is <strong>not a good water</strong> for human consumption.
                 </p>
+                <div>
+                    <span><strong>BD Name</strong> </span>: <span>&nbsp;{{ $water_report->bd_name }}</span>
+                </div>
+                <div>
+                    <span><strong>Technician Name</strong> </span>: <span>&nbsp;{{ \Auth::user()->name }}</span>
+                </div>
+                <br>                
                 <p style="font-size: 15px; text-align:center;">
-                    <strong>End of report.</strong>
+                    <strong>--End of report--</strong>
                 </p>
-                <br>
-                    <h1>Screenshot:</h1>
-                    <div id="output"></div>
-                <br>
-                <button onclick="takeshot()">Take Screenshot</button>
-            </div>               
+            </div>
             </div>
         </div>
         </section>
+    </div>  
+    <div class="text-center">
+        <button class="btn btn-primary" onclick="takeshot()">Send Email To Customer</button>
     </div>
-@endsection

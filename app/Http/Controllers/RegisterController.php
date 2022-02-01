@@ -11,7 +11,6 @@ use Illuminate\Support\Facades\Auth;
 class RegisterController extends Controller
 {
     public function index(){
-        return view('final_report');        
         return view('welcome');        
     }
     public function postRegisterUser(Request $request){
@@ -39,10 +38,10 @@ class RegisterController extends Controller
         ]);   
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('dashboard')
+            return redirect()->intended('getWaterReport')
                         ->withSuccess('Signed in');
         }  
-        return redirect("login")->withSuccess('Login details are not valid');
+        return back()->with('error', 'Login Details Are Not Valid');
     }
     public function dashboard(){
         if(Auth::check()){

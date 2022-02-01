@@ -8,13 +8,13 @@ use Mail;
 use App\Mail\MyMail;
 use Session;
 use App\Models\User;
+use App\Models\MailReport;
 use App\Models\WaterReport;
 use Illuminate\Support\Facades\Auth;
 
 class WaterReportController extends Controller
 {
     public function getWaterReport(){
-        return view('water_report');
         if(Auth::check()){
             return view('water_report');
         }
@@ -37,6 +37,8 @@ class WaterReportController extends Controller
         $report_array = [];
         $inputs = $request->all();
         $water_report = new WaterReport();
+        $water_report->tech_id = \Auth::user()->id;
+        $water_report->tech_name = \Auth::user()->name;
         $water_report->name = isset($inputs['name']) ? $inputs['name'] : '';
         $water_report->email = isset($inputs['email']) ? $inputs['email'] : '';
         $water_report->phone = isset($inputs['phone']) ? $inputs['phone'] : '';
@@ -51,15 +53,44 @@ class WaterReportController extends Controller
         $water_report->flow = isset($inputs['flow']) ? $inputs['flow'] : '';
         $water_report->installed_ro = isset($inputs['installed_ro']) ? $inputs['installed_ro'] : '';
         $water_report->purifier = isset($inputs['purifier']) ? $inputs['purifier'] : '';
-        if($water_report->save()){                
+        if($water_report->save()){    
             array_push($report_array, $water_report);
             $array = [
                 'view' => 'final_report',
                 'report_array' => $report_array,
                 'water_report' => $water_report
             ];
-            // Mail::to('monudah96@gmail.com')->send(new MyMail($array));
             return view('final_report', compact('array'));
         }
+    }
+    
+    public function mailReport(Request $request){
+        $inputs = $request->all();  
+        $png_url = "report-".time().".png";
+        $path =  "reports/" . $png_url;
+        $img = $inputs['image'];
+        $img = substr($img, strpos($img, ",")+1);
+        $data = base64_decode($img);
+        $success = file_put_contents($path, $data);
+        $mail_reports = new MailReport();
+        $mail_reports->name = isset($inputs['name']) ? $inputs['name'] : '';   
+        $mail_reports->email = isset($inputs['email']) ? $inputs['email'] : '';   
+        $mail_reports->phone = isset($inputs['phone']) ? $inputs['phone'] : '';   
+        $mail_reports->report = !empty($path) ? $path : '';  
+        if($mail_reports->save()){
+            $array = [
+                'view' => 'mail_reports',
+                'name' => $request->name,
+                'image' => $path,
+            ];
+            Mail::to('monudah96@gmail.com')->send(new MyMail($array));
+            return response()->json([
+                'success' => 1
+            ]);
+        }   
+    }
+
+    public function mailSuccess(){
+        return view('mail_response');
     }
 }

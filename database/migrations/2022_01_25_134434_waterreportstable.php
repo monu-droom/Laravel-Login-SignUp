@@ -15,6 +15,8 @@ class Waterreportstable extends Migration
     {
         Schema::create('waterreports', function (Blueprint $table) {
             $table->id();
+            $table->string('tech_id');
+            $table->string('tech_name');
             $table->string('name');
             $table->string('phone');
             $table->string('email');

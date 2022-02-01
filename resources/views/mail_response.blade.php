@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>OWO Water Report</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
@@ -10,13 +9,13 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
 </head>
 <body>
-
-<nav class="navbar bg-primary navbar-dark">
-  <div class="container-fluid">
-    <div class="navbar-header">
-      <a class="navbar-brand" href="/" style="font-size: 24px; margin: 0 auto;">OWO Water Report</a>
-    </div>
+<div class="container">
+  <div class="text-center">
+      <img src="/success-mail.jpg" alt="" class="img-fluid">
+      <p class="text-secondary"><strong>Email has been sent to customer.</strong></p>
+      <a href="/" class="btn btn-primary btn-sm">Go Home</a>
   </div>
-</nav>
-@yield('content')
-@include('footer')
+</div>
+
+</body>
+</html>
