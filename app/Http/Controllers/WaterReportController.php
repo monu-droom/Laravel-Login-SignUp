@@ -28,9 +28,7 @@ class WaterReportController extends Controller
             'bd_name' => 'required',
             'phone' => 'required|min:10',
             'tds_tap'=>'required',
-            'tds_ro'=>'required',
             'ph_tap'=>'required',
-            'ph_ro'=>'required',
             'flow'=>'required',
             'purifier' => 'required',
         ]);
