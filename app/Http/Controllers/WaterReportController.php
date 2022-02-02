@@ -98,4 +98,5 @@ class WaterReportController extends Controller
     public function mailSuccess(){
         return view('mail_response');
     }
+    
 }
