@@ -239,5 +239,5 @@
         </section>
     </div>  
     <div class="text-center">
-        <button class="btn btn-primary" onclick="takeshot()">Send Email To Customer</button>
+        <button class="btn btn-primary" style="padding: 17px !important; font-size: 42px !important;" onclick="takeshot()">Send Email To Customer</button>
     </div>

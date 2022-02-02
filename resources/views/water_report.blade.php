@@ -21,16 +21,16 @@
             <form action="{{ route('waterReport.submit') }}" method="POST">
             @csrf
                 <div class="form-group my-2">
-                    <input type="name" class="form-control" id="name" placeholder="Enter Customer Name" name="name">
+                    <input type="name" class="form-control" id="name" placeholder="Enter Customer Name" name="name" autocomplete="off">
                 </div>
                 <div class="form-group my-2">
-                    <input type="phone" class="form-control" id="phone" placeholder="Enter Customer Mobile No." name="phone">
+                    <input type="phone" class="form-control" id="phone" placeholder="Enter Customer Mobile No." name="phone" autocomplete="off">
                 </div>
                 <div class="form-group my-2">
-                    <input type="email" class="form-control" id="email" placeholder="Enter Customer Email" name="email">
+                    <input type="email" class="form-control" id="email" placeholder="Enter Customer Email" name="email" autocomplete="off">
                 </div>
                 <div class="form-group my-2">
-                    <input type="address" class="form-control" id="address" placeholder="Enter Customer Address" name="address">
+                    <input type="address" class="form-control" id="address" placeholder="Enter Customer Address" name="address" autocomplete="off">
                 </div>
                 <div class="form-group">
                     <label for="name">Business Developement Executive:</label>
@@ -45,27 +45,27 @@
                 <div class="form-group">
                     <label for="tds">TDS:</label>
                     <span class="inline ml-2">
-                        <input class="form-control my-1" type="text" size="13" name="tds_tap" placeholder="Tap Value"/> 
-                        <input class="form-control my-1" type="text" size="13" name="tds_ro" placeholder="RO Value"/>
-                        <input class="form-control my-1" type="text" size="13" name="tds_jar" placeholder="Jar Value"/>
+                        <input class="form-control my-1" type="text" size="13" name="tds_tap" autocomplete="off" placeholder="Tap Value"/> 
+                        <input class="form-control my-1" type="text" size="13" name="tds_ro" autocomplete="off" placeholder="RO Value"/>
+                        <input class="form-control my-1" type="text" size="13" name="tds_jar" autocomplete="off" placeholder="Jar Value"/>
                     </span>
                 </div>
                 <hr>
                 <div class="form-group">
                     <label for="tds">PH:</label>
                     <span class="inline ml-2">
-                        <input class="form-control my-1" type="text" size="13" name="ph_tap" placeholder="Tap Value"/> 
-                        <input class="form-control my-1" type="text" size="13" name="ph_ro" placeholder="RO Value"/>
-                        <input class="form-control my-1" type="text" size="13" name="ph_jar" placeholder="Jar Value"/>
+                        <input class="form-control my-1" type="text" size="13" name="ph_tap" autocomplete="off" placeholder="Tap Value"/> 
+                        <input class="form-control my-1" type="text" size="13" name="ph_ro" autocomplete="off" placeholder="RO Value"/>
+                        <input class="form-control my-1" type="text" size="13" name="ph_jar" autocomplete="off" placeholder="Jar Value"/>
                     </span>
                 </div>
                 <hr>
                 <div class="form-group my-1">
-                    <input type="text" class="form-control" id="flow" placeholder="Enter flow" name="flow">
+                    <input type="text" class="form-control" id="flow" placeholder="Enter flow" name="flow" autocomplete="off">
                 </div>
                 <hr>
                 <div class="form-group my-1">
-                    <input type="text" class="form-control" id="installed_ro" placeholder="Enter Purifier/RO name" name="installed_ro">
+                    <input type="text" class="form-control" id="installed_ro" placeholder="Enter Purifier/RO name" name="installed_ro" autocomplete="off">
                 </div>
                 <hr>
                 <div class="form-group my-1">
@@ -84,6 +84,9 @@
                 </div>
                 <button type="submit" class="btn btn-primary btn-block mt-2">Submit</button>
             </form>
+            <br>
+            <br>
+            <br>
             <br>
         </div>
         </section>

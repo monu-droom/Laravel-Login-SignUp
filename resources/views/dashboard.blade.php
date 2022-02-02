@@ -5,7 +5,7 @@
         <h1 class="text-center">{{ $total_report }}</h1>
     </div>
     <div class="px-3 mr-3">
-        <button class="btn btn-primary btn-block m-2 btn-sm">Create New Report</button>
+        <a class="btn btn-primary btn-block m-2 btn-sm" href="{{ route('water.report') }}">Create New Report</a>
     </div>
     <div class="card text-light p-3 mt-3 m-2" style="background: #6a00ff !important">
         <div>

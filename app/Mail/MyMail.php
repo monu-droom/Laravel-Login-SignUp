@@ -30,6 +30,7 @@ class MyMail extends Mailable
      */
     public function build()
     {
-        return $this->view($this->array['view']);
+        return $this->view($this->array['view'])
+                    ->subject('Your Water assessment report for your source water.');
     }
 }
