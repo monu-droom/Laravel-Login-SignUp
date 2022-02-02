@@ -11,7 +11,11 @@ use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
 {
-    public function index(){
+    public function index(){        
+        if(Auth::check()){
+            $total_report = WaterReport::where('tech_id', Auth::user()->id)->count();
+            return view('dashboard', compact('total_report'));
+        }
         return view('welcome');        
     }
     public function postRegisterUser(Request $request){
