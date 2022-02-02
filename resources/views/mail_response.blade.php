@@ -13,7 +13,7 @@
   <div class="text-center">
       <img src="/success-mail.jpg" alt="" class="img-fluid">
       <p class="text-secondary"><strong>Email has been sent to customer.</strong></p>
-      <a href="/" class="btn btn-primary btn-sm">Go Home</a>
+      <a href="/dashboard" class="btn btn-primary btn-sm">Go Home</a>
   </div>
 </div>
 

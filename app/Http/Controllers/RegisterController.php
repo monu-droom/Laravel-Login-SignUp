@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Hash;
 use Session;
 use App\Models\User;
+use App\Models\WaterReport;
 use Illuminate\Support\Facades\Auth;
 
 class RegisterController extends Controller
@@ -45,14 +46,15 @@ class RegisterController extends Controller
     }
     public function dashboard(){
         if(Auth::check()){
-            return view('dashboard');
+            $total_report = WaterReport::where('tech_id', Auth::user()->id)->count();
+            return view('dashboard', compact('total_report'));
         }
-        return redirect("login")->withSuccess('You are not allowed to access');
+        return redirect("welcome")->with('error', 'You are not allowed to access');
     }
     public function logout() {
         Session::flush();
         Auth::logout();  
-        return Redirect('login');
+        return Redirect('/');
     }
     public function getApiData(Request $request){
         $id = $request->route('id');

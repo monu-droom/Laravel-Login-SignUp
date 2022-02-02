@@ -36,7 +36,12 @@ class WaterReportController extends Controller
         ]);
         $report_array = [];
         $inputs = $request->all();
-        $water_report = new WaterReport();
+        $water_report = WaterReport::where('email', $inputs['email'])
+                    ->orWhere('phone', $inputs['phone'])
+                    ->first();
+        if(is_array($water_report) && sizeof($water_report) == 0 || $water_report == ''){
+            $water_report = new WaterReport();
+        }
         $water_report->tech_id = \Auth::user()->id;
         $water_report->tech_name = \Auth::user()->name;
         $water_report->name = isset($inputs['name']) ? $inputs['name'] : '';
@@ -83,7 +88,7 @@ class WaterReportController extends Controller
                 'name' => $request->name,
                 'image' => $path,
             ];
-            Mail::to('monudah96@gmail.com')->send(new MyMail($array));
+            Mail::to($inputs['email'])->send(new MyMail($array));
             return response()->json([
                 'success' => 1
             ]);
