@@ -118,7 +118,6 @@
             $.post("{{ route('mail.report') }}", {_token: "{{ csrf_token() }}", image, email, phone, name},
                 function(data, status, jqXHR) {// success callback
                     if(status == 'success'){
-                        alert('Mail has been sent.');
                         window.location.href="{{ route('mail-success') }}";
                     }else{
                         alert('Error');
