@@ -27,9 +27,6 @@ class WaterReportController extends Controller
             'email' => 'required|email',
             'bd_name' => 'required',
             'phone' => 'required|min:10',
-            'tds_tap'=>'required',
-            'ph_tap'=>'required',
-            'flow'=>'required',
             'purifier' => 'required',
         ]);
         $report_array = [];

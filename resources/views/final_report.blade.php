@@ -8,6 +8,7 @@
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>
 <body>
 
@@ -114,8 +115,8 @@
             html2canvas(grp).then(function (canvas) {
                 $('#graphs').remove();
                 document.getElementById('new_graph').appendChild(canvas);
-            var image = canvas.toDataURL('image/png');
-            $.post("{{ route('mail.report') }}", {_token: "{{ csrf_token() }}", image, email, phone, name},
+                var image = canvas.toDataURL('image/png');
+                $.post("{{ route('mail.report') }}", {_token: "{{ csrf_token() }}", image, email, phone, name},
                 function(data, status, jqXHR) {// success callback
                     if(status == 'success'){
                         window.location.href="{{ route('mail-success') }}";
@@ -226,7 +227,7 @@
                     <span><strong>BD Name</strong> </span>: <span>&nbsp;{{ $water_report->bd_name }}</span>
                 </div>
                 <div>
-                    <span><strong>Technician Name</strong> </span>: <span>&nbsp;{{ \Auth::user()->name }}</span>
+                    <span><strongfile_put_contents>Technician Name</strong> </span>: <span>&nbsp;{{ \Auth::user()->name }}</span>
                 </div>
                 <br>                
                 <p style="font-size: 15px; text-align:center;">
